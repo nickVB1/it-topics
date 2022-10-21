@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const campus = require('./models/campus');
-
+const Docent = require('./models/docent')
 
 
 
@@ -67,5 +67,15 @@ router.delete('/campus/delete/:id', async(req, res) => {
     }
 });
 
+router.get('/docent', async(req, res) => {
+    console.log('/docent route called');
+    try {
+        res.json(await Docent.find().populate('campussen').sort('voornaam'));
+    } catch (e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+
+})
 
 module.exports = router;
