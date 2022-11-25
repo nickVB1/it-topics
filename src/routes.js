@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const campus = require('./models/campus');
+const docent = require('./models/docent');
 const Docent = require('./models/docent')
 
 
@@ -77,5 +78,34 @@ router.get('/docent', async(req, res) => {
     }
 
 })
+router.post('/docent/create', async(req, res) => {
+    console.log('/docent/create route called');
+    try {
+        res.send(await docent.create(req.body));
+    } catch (e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+});
 
+router.put('/docent/update/:id', async(req, res) => {
+    console.log('/docent/update/:id route called');
+    try {
+        res.send(await docent.findByIdAndUpdate(req.params.id, { $set: req.body }));
+    } catch (e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+});
+
+
+router.delete('/docent/delete/:id', async(req, res) => {
+    console.log('/docent/delete/:id route called');
+    try {
+        res.send(await docent.findByIdAndDelete(req.params.id));
+    } catch (e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+});
 module.exports = router;
